@@ -1,3 +1,9 @@
+2016-08-24 - 0.6
+################
+
+- rename _get_memcache_timeout to get_backend_timeout for Django >1.9
+- add function bug fix
+
 2013-12-13 - 0.4
 ################
 

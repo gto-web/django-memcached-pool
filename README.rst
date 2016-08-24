@@ -1,6 +1,8 @@
 django-memcached-pool
 =====================
 
+**This is a maintained version of Mozilla django-memcached-pool**
+
 An efficient fast Django Memcached backend with a pool of connectors, based on
 ultramemcache.
 
