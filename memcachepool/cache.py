@@ -62,10 +62,13 @@ class UMemcacheCache(MemcachedCache):
     def unserialize(self, data):
         return pickle.loads(data)
 
-    def _get_memcache_timeout(self, timeout):
+    def get_backend_timeout(self, timeout):
         if timeout == 0:
             return timeout
-        return super(UMemcacheCache, self)._get_memcache_timeout(timeout)
+        return super(UMemcacheCache, self).get_backend_timeout(timeout)
+
+    def _get_memcache_timeout(self, timeout):
+        return self.get_backend_timeout(timeout)
 
     def _pick_server(self):
         # update the blacklist
@@ -143,7 +146,7 @@ class UMemcacheCache(MemcachedCache):
 
         key = self.make_key(key, version=version)
 
-        return self.call('add', value, self._get_memcache_timeout(timeout),
+        return self.call('add', key, value, self.get_backend_timeout(timeout),
                          flag)
 
     def get(self, key, default=None, version=None):
@@ -162,7 +165,7 @@ class UMemcacheCache(MemcachedCache):
         else:
             value = '%d' % value
         key = self.make_key(key, version=version)
-        self.call('set', key, value, self._get_memcache_timeout(timeout), flag)
+        self.call('set', key, value, self._get_backend_timeout(timeout), flag)
 
     def delete(self, key, version=None):
         key = self.make_key(key, version=version)
@@ -239,7 +242,7 @@ class UMemcacheCache(MemcachedCache):
             safe_data[key] = value
 
         for key, value in safe_data.items():
-            self.call('set', key, value, self._get_memcache_timeout(timeout),
+            self.call('set', key, value, self.get_backend_timeout(timeout),
                       flag)
 
     def delete_many(self, keys, version=None):
