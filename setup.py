@@ -14,7 +14,7 @@ requires = ['Django', 'umemcache']
 test_requires = ['nose']
 
 
-setup(name='gto-django-memcached-pool',
+setup(name='django-memcached-pool-gto',
       version='0.6',
       description='A Memcached Pool for Django',
       long_description=README + '\n\n' + CHANGES,

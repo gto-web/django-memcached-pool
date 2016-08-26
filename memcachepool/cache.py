@@ -45,7 +45,7 @@ class UMemcacheCache(MemcachedCache):
             with self._pool.reserve() as conn:
                 try:
                     return getattr(conn, func)(*args, **kwargs)
-                except Exception, exc:
+                except Exception as exc:
                     # log
                     retries += 1
         raise exc
@@ -106,7 +106,7 @@ class UMemcacheCache(MemcachedCache):
             try:
                 cli.connect()
                 return cli
-            except (socket.timeout, socket.error), e:
+            except (socket.timeout, socket.error) as e:
                 if not isinstance(e, socket.timeout):
                     if e.errno != errno.ECONNREFUSED:
                         # unmanaged case yet
@@ -165,7 +165,7 @@ class UMemcacheCache(MemcachedCache):
         else:
             value = '%d' % value
         key = self.make_key(key, version=version)
-        self.call('set', key, value, self._get_backend_timeout(timeout), flag)
+        self.call('set', key, value, self.get_backend_timeout(timeout), flag)
 
     def delete(self, key, version=None):
         key = self.make_key(key, version=version)
